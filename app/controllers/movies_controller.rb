@@ -4,14 +4,15 @@ class MoviesController < ApplicationController
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
+    @request_sort = 'id'
   end
 
   def index
     allowable_sorts = [ 'title', 'release_date', 'rating' ]
-    request_sort = params[:sort]
+    @request_sort = params[:sort] unless params[:sort] == nil
     sort_order = 'id'
-    if allowable_sorts.include?(request_sort)
-      sort_order = request_sort
+    if allowable_sorts.include?(@request_sort)
+      sort_order = @request_sort
     end
     @movies = Movie.find(:all, :order => sort_order)
   end

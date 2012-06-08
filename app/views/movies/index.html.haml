@@ -4,9 +4,9 @@
 %table#movies
   %thead
     %tr
-      %th{:class => ('hilite' if params[:sort] == 'title')}= link_to 'Movie Title', {:sort => 'title'}, :id => 'title_header'
-      %th{:class => ('hilite' if params[:sort] == 'rating')}= link_to  'Rating', :sort => 'rating', :id => 'rating_header'
-      %th{:class => ('hilite' if params[:sort] == 'release_date')}= link_to 'Release Date', :sort => 'release_date', :id => 'release_date_header'
+      %th{decorate_column('title', @request_sort)}= link_to 'Movie Title', {:sort => 'title'}, :id => 'title_header'
+      %th{decorate_column('rating', @request_sort)}= link_to  'Rating', :sort => 'rating', :id => 'rating_header'
+      %th{decorate_column('release_date', @request_sort)}= link_to 'Release Date', :sort => 'release_date', :id => 'release_date_header'
       %th More Info
   %tbody
     - @movies.each do |movie|
