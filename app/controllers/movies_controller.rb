@@ -8,13 +8,16 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = ['G', 'PG', 'PG-13', 'R']
+    @request_ratings = @all_ratings
     allowable_sorts = [ 'title', 'release_date', 'rating' ]
     @request_sort = params[:sort] unless params[:sort] == nil
     sort_order = 'id'
     if allowable_sorts.include?(@request_sort)
       sort_order = @request_sort
     end
-    @movies = Movie.find(:all, :order => sort_order)
+    @request_ratings = params[:ratings].keys unless params[:ratings] == nil
+    @movies = Movie.where(:rating => @request_ratings).find(:all, :order => sort_order)
   end
 
   def new
