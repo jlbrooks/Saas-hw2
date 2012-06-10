@@ -15,16 +15,16 @@ class MoviesController < ApplicationController
     sort_order = 'id'
     if allowable_sorts.include?(@request_sort)
       sort_order = @request_sort
-      session[:sort] = @request_sort
     end
     
-    if params[:ratings] == nil
+    if !params[:ratings]
       redirect_to :action => 'index', :ratings => session[:ratings], :sort => session[:sort]
     else
       @request_ratings = params[:ratings] 
-      session[:ratings] = @request_ratings
     end
     
+    session[:ratings] = @request_ratings
+    session[:sort] = @request_sort
     @movies = Movie.where(:rating => @request_ratings.keys).find(:all, :order => sort_order)
   end
 
